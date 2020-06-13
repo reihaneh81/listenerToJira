@@ -1,1 +1,1 @@
-print('This is printing sth)
+print('This is printing sth')
