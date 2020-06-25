@@ -29,8 +29,8 @@ def connectToSlack():
 
 
          print('This is Slack Authentication Code')
-         slack_client = slack.WebClient('xoxb-577663161824-1160309825157-nFXvzx2vvfeI3GfiCvHvJo6P')
-          #                              'xoxb-577663161824-864692303857-3owjOZrhXnmmh1h1ZCEhdwQR')
+         slack_client = slack.WebClient('')
+          #                              '')
          print('API Connection is successfull')
 
          """This Json File has interactive message
