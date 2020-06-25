@@ -1,0 +1,37 @@
+{
+  "blocks": [
+
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": ":slack: *Hello from JiraServiceDesk_Approval Slack APP*\n\n *It is Time to check the Jira ticket * "
+
+
+			}
+		},
+
+
+    {
+      "type": "section",
+
+
+          "text": {
+
+            "text": "*This Jira Ticker* has requested you to check the description and confirm the Approval",
+            "type": "mrkdwn"
+                  },
+          "accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Approve",
+					"emoji": true
+				},
+
+				"value": "click_me_123"
+			}
+            }
+
+      ]
+}

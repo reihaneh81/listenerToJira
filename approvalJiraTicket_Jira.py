@@ -2,64 +2,143 @@ from flask import Flask
 from flask import json
 from flask import request, make_response
 import os
+import logging
 import slack
 import re
-import jsonify
-
-
-import traceback
-from markupsafe import escape
 from pprint import pprint
 
 
-#class FetchDataFromJiraTicket(object):
-
-
+"""This is name Of Application 
+   The one we are going to listening
+"""
 app1 = Flask(__name__)
+
+
+"""
+     This is route of App as a simple example which display the message on web when we run app it
+"""
+
+
+
+
+
 @app1.route('/')
 def api_root():
 
     return('Welcome To return')
 
+
+
+"""
+    to post data to app which is comig from Jira , to that I set up the webhook url by using ngrok/webhook , 
+    which allows to post data in real time when the new Jira ticket is created and we can sort of split 
+    which kinds of information we need to  receive such as IssueTyoe, Summary/description, Reporter name and 
+    the main part Approval name.family
+"""
 @app1.route('/webhook', methods=['POST'])
 def api_jiraTest_message():
-    ############################# START TO SEND DIRECT MESSAGE TO  SLACK BY PARSING DATA FETCHED FROM JIRA ###############################
 
 
-
-
-
-         print('this is test to check if it comes to this function')
          data = request.get_json()
 
-
-
-         print('It is printing Issue Type')
+         """
+         To Fetch Issue Type
+         """
          Issue_Type = data['issue']['fields']['issuetype']['name']
          pprint(Issue_Type)
 
-         print('It is printing summary')
+         """
+         To Fetch Summary
+         """
+
          summary = data['issue']['fields']['summary']
          pprint(summary)
 
-         print('It is printing description')
+         """
+         To Fetch Description
+         """
+
          description = data['issue']['fields']['description']
          pprint(description)
 
-         print('It is printing issue_key')
+         """
+         To Fetch Issue_Key
+         """
+
          issue_key = data['issue']['key']
          pprint(issue_key)
 
-         print('It is printing issue_type')
-         issue_type = data['issue']['fields']['issuetype']['name']
-         pprint(issue_type)
+         """
+         To Fetch Due_date
+         """
 
-         print('It is printing Approvers')
+         duedate = data['issue']['fields']['duedate']
+         pprint(duedate)
+
+         """
+         To Fetch Approvers name
+         """
+
          Approvers = data['issue']['fields']['customfield_16406']
-         pprint(Approvers)
-         print('This is printing the name of approver')
          pprint(Approvers[0]['name'])
 
+         """
+         To Fetch Priority  name
+         """
+         Priority = data['issue']['fields']['priority']['name']
+         pprint(Priority)
+
+
+         """
+         Now It stores all the necessary Information to Json file called TicketInformation  
+         """
+
+
+         data = {
+             "blocks": [
+
+                 {
+                     "type": "section",
+                     "text": {
+                         "type": "mrkdwn",
+                         "text": ":slack: *Hello from JiraServiceDesk_Approval Slack APP*\n\n *It is Time to check the Jira ticket * "
+
+                     }
+                 },
+
+                 {"type": "section",
+
+                  "text": {
+
+                      "text": "*This Jira Ticker %s* has requested you to check the description and confirm the Approval" % issue_key,
+                      "type": "mrkdwn"
+                  }
+                  }
+             ]
+         }
+
+         pprint(data)
+
+         dir = os.path.dirname(__file__)
+         pprint(dir)
+
+         with open(r'{0}/ticketInformation.json'.format(dir), 'r+') as json_file:
+
+             ticketInformation = json.load(json_file)
+
+             ticketInformation.update(data)
+
+             json_file.seek(0)
+
+             json.dump(data, json_file)
+
+         pprint(ticketInformation)
+
+         print('Stroring is done Successfully')
+
+         """
+         Its splits @sign + domain  email
+         """
          regexStr = r'^([^@]+)@[^@]+$'
          emailStr = Approvers[0]['name']
          approver = re.search(regexStr, emailStr)
@@ -81,21 +160,19 @@ def api_jiraTest_message():
          with open(r'{0}/approverInfo.json'.format(dir), 'w') as json_file:
             json.dump(datainfo, json_file)
 
-         print('Stroring is Successfull')
-
+         message = 'Pure Approver name.family is exposed  Successfully'
+         print(message)
 
 
 
 
 if __name__ == "__main__":
 
-    # x= FetchDataFromJiraTicket()
-    # x.app1.run()
-    # x.api_root()
-    # x.api_jiraTest_message()
-    # x.toFetch_Name_Family()
-    print('To run api-jiraTest_message')
+
+    print('To run app  to parse data from Jira')
     app1.run()
+
+
 
 
 
