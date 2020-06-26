@@ -5,6 +5,7 @@ import os
 import slack
 import re
 import jsonify
+import approvalJiraTicket_Jira
 
 
 import traceback
@@ -29,8 +30,8 @@ def connectToSlack():
 
 
          print('This is Slack Authentication Code')
-         slack_client = slack.WebClient('')
-          #                              '')
+         slack_client = slack.WebClient(os.environ.get('App_Token'))
+
          print('API Connection is successfull')
 
          """This Json File has interactive message
