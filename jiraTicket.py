@@ -42,6 +42,28 @@ def api_jiraTest_message():
 
          data = request.get_json()
 
+
+         """
+         To Fetch Reporter name
+         """
+         Reporter = data['issue']['fields']['reporter']
+         print('All the information about Reporter')
+         pprint(Reporter)
+         Reporter_name = Reporter['name']
+         print('this is print reporter name')
+         pprint(Reporter_name)
+
+         """
+         Its splits @sign + domain  email
+         """
+         regexStr = r'^([^@]+)@[^@]+$'
+         emailStr = Reporter['name']
+         Reporter = re.search(regexStr, emailStr)
+         if not Reporter is None:
+             print('print name and familyname of reporter',Reporter.group(1))
+         else:
+             print("Did not match")
+
          """
          To Fetch Issue Type
          """
@@ -111,7 +133,19 @@ def api_jiraTest_message():
 
                   "text": {
 
-                      "text": "This Jira Ticket has requested you as an approver with this following link: \n\n https://jira-test.nentgroup.com/browse/%s  \n\n Please check the description and confirm the Approval part " % issue_key,
+                      "text": "You have a new Jirat Ticket request to approve from @%s\n\n Please check the Jira request with this following information and link : \n\n https://jira-test.nentgroup.com/browse/%s"
+                              "\n\n"
+                              "*Issue_Type*:             %s"
+                              "\n\n"
+                              "*Summary*:                %s"
+                              "\n\n"
+                              "*Description*:            %s"
+                              "\n\n"
+                              "*Issue_Key*:               %s"
+                              "\n\n"
+                              "*Priority*:                   %s"
+                              "\n\n"
+                              "" % (Reporter.group(1),issue_key,Issue_Type,summary,description,issue_key,Priority),
                       "type": "mrkdwn"
                   }
                   },{
