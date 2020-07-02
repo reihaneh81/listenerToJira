@@ -186,6 +186,33 @@ def api_jiraTest_message():
          dir = os.path.dirname(__file__)
          pprint(dir)
 
+
+         """
+         First It clears previous data
+         """
+
+
+         with open(r'{0}/ticketInformation.json'.format(dir)) as json_file:
+             opendata= json.load(json_file)
+             opendata.clear()
+
+             print('this is deleting all data inside ')
+             pprint(opendata)
+
+         """
+         it prints {} to start writing json
+         """
+
+         with open(r'{0}/ticketInformation.json'.format(dir), 'w') as json_file:
+             writedata = json.dump(opendata,json_file)
+             print('this is writing only {} inside file ')
+             pprint(writedata)
+
+
+         """
+         It adds information about new ticket is requested
+         """
+
          with open(r'{0}/ticketInformation.json'.format(dir), 'r+') as json_file:
 
              ticketInformation = json.load(json_file)
@@ -201,7 +228,9 @@ def api_jiraTest_message():
          print('Stroring is done Successfully')
 
          """
-         Its splits @sign + domain  email
+         To send direct message to user it needs to split @sign + domain  email as suffixes
+         To convert any upper case letter into the Lower case in order to get recognised by Slack
+         Print name.family inside approverInfo json file 
          """
          regexStr = r'^([^@]+)@[^@]+$'
          emailStr = Approvers[0]['name']
@@ -211,13 +240,21 @@ def api_jiraTest_message():
          else:
              print("Did not match")
 
-         datainfo ={}
-         print('this is printing datainfo',datainfo)
-         datainfo['Approver'] =[]
+         print('this is approval name.family')
+         string = approver.group(1)
+         name_family = string.lower()
+         print('this is printing name and family', name_family)
+
+         datainfo = {}
+         print('this is printing datainfo', datainfo)
+         datainfo['Approver'] = []
          datainfo['Approver'].append({
-            'name': '%s'%approver.group(1)
+             'name': '%s' % name_family
          })
-         print('this is printing datainfo by appending Approver','%s'%approver.group(1))
+
+         print('this is printing datainfo')
+         pprint(datainfo)
+         print('this is printing datainfo by appending Approver', '%s' % name_family)
 
          print('Here the approver name.family is storing into json file as approverInfo.json')
          dir = os.path.dirname(__file__)
