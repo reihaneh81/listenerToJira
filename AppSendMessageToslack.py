@@ -3,6 +3,8 @@ from flask import json
 from flask import request, make_response
 import os
 import slack
+import time
+from string import ascii_lowercase
 import re
 import jsonify
 import approvalJiraTicket_Jira
@@ -15,7 +17,10 @@ from pprint import pprint
 def connectToSlack():
 
 
-         print('It is printing Interaction Message which is written in json format')
+         """
+         1: It is reading ApproverInfor file to fetch name.family of Approver
+         :return:
+         """
 
 
          dir = os.path.dirname(__file__)
@@ -24,50 +29,60 @@ def connectToSlack():
             filename = json.load(json_file)
          pprint(filename)
          x=filename['Approver']
-         pprint(x)
-         pprint(x[0])
-         pprint(x[0]['name'])
+         string = x[0]['name']
+         name_family=string.lower()
+         print('this is printing name and family', name_family)
 
 
-         print('This is Slack Authentication Code')
+         """
+         It is connecting to SLACK By Using API Token
+         """
+
          slack_client = slack.WebClient(os.environ.get('App_Token'))
-
          print('API Connection is successfull')
 
          """This Json File has interactive message
-            By opening and inserting in Posting message
+            By opening and reading data to post Interactive message message
          """
 
          with open(r'{0}/ticketInformation.json'.format(dir), 'r') as Interactive_json_file:
             interactive_message = json.load(Interactive_json_file)
+         print('this is all ticket information for sending interactive message')
          pprint(interactive_message)
 
-
+         """With This conversation.list method we can list all channels in a Slack team.
+         """
 
          channels_info = slack_client.api_call('conversations.list')
-
          pprint(channels_info['channels'])
          channels = channels_info.get('channels') if channels_info else None
-
          print('Print all channeles')
          pprint(channels)
 
 
-
+         """
+         Lists all users in a Slack team by users.list method
+         """
          users_identity = slack_client.api_call('users.list')
+         print('this is printing all identity members')
          pprint(users_identity['members'])
+
+         """Now it converts user name.family to its user id for posting dierct message to approver person 
+         """
 
          if users_identity.get('ok'):
           for identity in users_identity.get('members'):
 
            pprint(identity.get("name"))
-           if identity.get("name") == x[0]['name']:
-            # if identity.get("name") == 'reihaneh.vafaei':
-            identity_channel = identity.get("id")
-            pprint(identity_channel)
+           if identity.get("name") == name_family:
 
+            time.sleep(3)
+            identity_channel = identity.get("id")
+            print('this is printing all identity channel')
+            pprint(identity_channel)
+            print('this is posting message')
             slack_client.chat_postMessage(channel=identity_channel
-                                          , attachments=[interactive_message],username=x[0]['name'], as_user=True)
+                                          , attachments=[interactive_message], as_user=True)
 
 
 
