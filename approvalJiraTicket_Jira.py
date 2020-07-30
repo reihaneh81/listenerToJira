@@ -2,6 +2,7 @@ from flask import Flask
 from flask import json
 from flask import request, make_response
 import os
+
 import logging
 import slack
 import re
@@ -110,7 +111,7 @@ def api_jiraTest_message():
 
                   "text": {
 
-                      "text": "*This Jira Ticker %s* has requested you to check the description and confirm the Approval" % issue_key,
+                      "text": "*This Jira Ticker %s* has requested you as an approver to check the description and confirm the Approval" % issue_key,
                       "type": "mrkdwn"
                   }
                   }
@@ -141,19 +142,31 @@ def api_jiraTest_message():
          """
          regexStr = r'^([^@]+)@[^@]+$'
          emailStr = Approvers[0]['name']
+
+
+
+
          approver = re.search(regexStr, emailStr)
          if not approver is None:
              print(approver.group(1))
          else:
              print("Did not match")
 
+         print('this is approval name.family')
+         string = approver.group(1)
+         name_family = string.lower()
+         print('this is printing name and family', name_family)
+
          datainfo ={}
          print('this is printing datainfo',datainfo)
          datainfo['Approver'] =[]
          datainfo['Approver'].append({
-            'name': '%s'%approver.group(1)
+            'name': '%s'%name_family
          })
-         print('this is printing datainfo by appending Approver','%s'%approver.group(1))
+
+         print('this is printing datainfo')
+         pprint(datainfo)
+         print('this is printing datainfo by appending Approver','%s'%name_family)
 
          print('Here the approver name.family is storing into json file as approverInfo.json')
          dir = os.path.dirname(__file__)
@@ -161,6 +174,7 @@ def api_jiraTest_message():
             json.dump(datainfo, json_file)
 
          message = 'Pure Approver name.family is exposed  Successfully'
+
          print(message)
 
 
