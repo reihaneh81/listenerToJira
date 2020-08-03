@@ -1,9 +1,14 @@
 from flask import Flask
 from flask import json
 from flask import request, make_response
-import os
 import slack
 import time
+from slackeventsapi import SlackEventAdapter
+from slack import WebClient
+
+import os
+#from slackeventsapi import SlackEventAdapter
+
 from string import ascii_lowercase
 import re
 import jsonify
@@ -13,6 +18,7 @@ import approvalJiraTicket_Jira
 import traceback
 from markupsafe import escape
 from pprint import pprint
+
 
 def connectToSlack():
 
@@ -37,8 +43,10 @@ def connectToSlack():
          """
          It is connecting to SLACK By Using API Token
          """
-
-         slack_client = slack.WebClient(os.environ.get('App_Token'))
+         App_Token= os.environ.get('App_Token')
+         print(App_Token)
+         slack_client = slack.WebClient(App_Token)
+         #slack_client = slack.WebClient('xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t')
          print('API Connection is successfull')
 
          """This Json File has interactive message
@@ -81,9 +89,110 @@ def connectToSlack():
             print('this is printing all identity channel')
             pprint(identity_channel)
             print('this is posting message')
-            slack_client.chat_postMessage(channel=identity_channel
-                                          , attachments=[interactive_message], as_user=True)
+            return slack_client.chat_postMessage(channel=identity_channel
+                                          , attachments=[interactive_message])
 
+
+def slackResponse():
+    """
+             It is connecting to SLACK By Using API Token
+             """
+    App_Token = os.environ.get('App_Token')
+    print(App_Token)
+    slack_client = slack.WebClient(App_Token)
+    # slack_client = slack.WebClient('xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t')
+    print('API Connection is successfull')
+
+    """This Json File has interactive message
+       By opening and reading data to post Interactive message message
+    """
+
+    print('Here the approver name.family is storing into json file as approverInfo.json')
+    dir = os.path.dirname(__file__)
+    with open(r'{0}/approverInfo.json'.format(dir), 'r') as json_file:
+        ReporterInfo = json.load(json_file)
+    pprint(ReporterInfo)
+    pprint(ReporterInfo['Approver'])
+    Reporter = ReporterInfo['Approver'][0]
+    pprint(Reporter)
+    pprint(Reporter['name'])
+
+    # Parse the request payload
+    form_json = json.loads(request.form["payload"])
+
+    print('it is')
+    pprint(form_json)
+
+    ts =form_json['message']
+    print('this is time stamp',ts['ts'])
+
+
+    # Verify that the request came from Slack
+    #verify_slack_token(form_json["token"])
+
+    # Check to see what the user's selection was and update the message accordingly
+    # selection = form_json["actions"][0]["text"][0]["value"]
+    selection = form_json["actions"][0]
+    print(selection)
+
+    pprint(selection)
+
+    if selection == "Approve":
+        message_text = "Approve"
+    else:
+        message_text = "Reject"
+
+    data2 = {
+        "blocks": [
+
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": ":slack: *Hello from JiraServiceDesk_Approval Slack APP*\n\n\n\n"
+
+                }
+            },
+
+            {"type": "section",
+
+             "text": {
+
+                 "text": "@%s approved this request \n\n  " % (Reporter['name']),
+                 "type": "mrkdwn"
+             }
+
+             }
+        ]
+    }
+
+
+
+
+    dataEx={
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "This is a plain text section block."
+
+			}
+		}
+	]
+}
+
+    pprint(data2)
+    # return slack_client.chat_update(
+    #
+    #     channel=form_json["channel"]["id"],
+    #     ts='1234567890.123456',
+    #     text="One {}, right coming up! :coffee:".format(message_text),
+    #     attachments=[dataEx]
+    # )
+
+    return slack_client.chat_update(channel=form_json["channel"]["id"],
+               ts=ts['ts'],attachments=[data2])
 
 
 if __name__ == "__main__":
@@ -91,3 +200,5 @@ if __name__ == "__main__":
 
     print('This function send direct message to Approver')
     connectToSlack()
+
+
