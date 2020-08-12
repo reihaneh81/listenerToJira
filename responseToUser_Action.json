@@ -1,0 +1,17 @@
+"blocks": [
+
+                 {
+                     "type": "section",
+                     "text": {
+                         "type": "mrkdwn",
+                         "text": ":slack: *Hello from JiraServiceDesk_Approval Slack APP*\n\n\n\n"
+
+                     }
+                 },
+
+                 {"type": "section",
+
+                  "text": {
+
+                      "text": "You have a new Jirat Ticket request to approve from @%s\n\n Please check the Jira request with this following information and link : \n\n https://jira-test.nentgroup.com/browse/%s"
+                    }

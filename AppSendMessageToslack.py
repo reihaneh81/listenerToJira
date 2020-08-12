@@ -46,6 +46,7 @@ def connectToSlack():
          App_Token= os.environ.get('App_Token')
          print(App_Token)
          slack_client = slack.WebClient(App_Token)
+
          #slack_client = slack.WebClient('xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t')
          print('API Connection is successfull')
 
@@ -89,8 +90,10 @@ def connectToSlack():
             print('this is printing all identity channel')
             pprint(identity_channel)
             print('this is posting message')
-            return slack_client.chat_postMessage(channel=identity_channel
+            slack_client.chat_postMessage(channel=identity_channel
                                           , attachments=[interactive_message])
+
+            return make_response("OK", 200)
 
 
 def slackResponse():
@@ -117,6 +120,29 @@ def slackResponse():
     pprint(Reporter)
     pprint(Reporter['name'])
 
+
+
+    issue_key = ReporterInfo['Issue_key'][0]
+    pprint(issue_key)
+    pprint(issue_key['name'])
+
+    Issue_Type = ReporterInfo['Issue_Type'][0]
+    pprint(Issue_Type)
+    pprint(Issue_Type['name'])
+
+    summary = ReporterInfo['Summary'][0]
+    pprint(summary)
+    pprint(summary['name'])
+
+    description = ReporterInfo['Description'][0]
+    pprint(description)
+    pprint(description['name'])
+
+    Priority = ReporterInfo['Priority'][0]
+    pprint(Priority)
+    pprint(Priority['name'])
+
+
     # Parse the request payload
     form_json = json.loads(request.form["payload"])
 
@@ -142,6 +168,16 @@ def slackResponse():
     else:
         message_text = "Reject"
 
+    dir = os.path.dirname(__file__)
+    with open(r'{0}/ticketInformation.json'.format(dir), 'r') as json_file:
+        ReporterInfo = json.load(json_file)
+    pprint(ReporterInfo)
+
+
+
+
+
+
     data2 = {
         "blocks": [
 
@@ -158,13 +194,54 @@ def slackResponse():
 
              "text": {
 
-                 "text": "@%s approved this request \n\n  " % (Reporter['name']),
+                 "text": "You can check the Jira request that you approved with this following information and link  : \n\n https://jira-test.nentgroup.com/browse/%s"
+                         
+                         "\n\n"
+                         "*Reporter*:             %s"
+                         "\n\n"
+                         "*Issue_Type*:             %s"
+                         "\n\n"
+                         "*Summary*:                %s"
+                         "\n\n"
+                         "*Description*:            %s"
+                         "\n\n"
+                         "*Issue_Key*:               %s"
+                         "\n\n"
+                         "*Priority*:                   %s"
+                         "\n\n"
+                         "" % (issue_key['name'],Reporter['name'],Issue_Type['name'], summary['name'], description['name'], issue_key['name'], Priority['name']),
+                 "type": "mrkdwn"
+             }
+             }, {"type": "section",
+
+             "text": {
+
+                 "text": ":white_check_mark: @%s approved this request \n\n  "%Reporter['name'],
                  "type": "mrkdwn"
              }
 
              }
         ]
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -191,8 +268,10 @@ def slackResponse():
     #     attachments=[dataEx]
     # )
 
-    return slack_client.chat_update(channel=form_json["channel"]["id"],
+    slack_client.chat_update(channel=form_json["channel"]["id"],
                ts=ts['ts'],attachments=[data2])
+
+    return make_response("OK", 200)
 
 
 if __name__ == "__main__":

@@ -276,10 +276,39 @@ def api_jiraTest_message():
          pprint(datainfo)
          print('this is printing datainfo by appending Approver', '%s' % name_family)
 
+
+         datainfo['Issue_key'] = []
+         datainfo['Issue_key'].append({
+             'name': '%s' % issue_key
+         })
+
+         datainfo['Issue_Type'] = []
+         datainfo['Issue_Type'].append({
+             'name': '%s' % Issue_Type
+         })
+
+         datainfo['Summary'] = []
+         datainfo['Summary'].append({
+             'name': '%s' % summary
+         })
+
+         datainfo['Description'] = []
+         datainfo['Description'].append({
+             'name': '%s' % description
+         })
+
+         datainfo['Priority'] = []
+         datainfo['Priority'].append({
+             'name': '%s' % Priority
+         })
+
+
+
          print('Here the approver name.family is storing into json file as approverInfo.json')
          dir = os.path.dirname(__file__)
          with open(r'{0}/approverInfo.json'.format(dir), 'w') as json_file:
-            json.dump(datainfo, json_file)
+            file=json.dump(datainfo, json_file)
+         print('this is printing file')
 
          message = 'Pure Approver name.family is exposed  Successfully'
          AppSendMessageToslack.connectToSlack()
