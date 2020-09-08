@@ -1,0 +1,41 @@
+{
+  "comment": {
+    "author": {
+      "active": true,
+      "avatarUrls": {
+        "16x16": "https://jira-test.nentgroup.com/secure/useravatar?size=xsmall&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "24x24": "https://jira-test.nentgroup.com/secure/useravatar?size=small&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "32x32": "https://jira-test.nentgroup.com/secure/useravatar?size=medium&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "48x48": "https://jira-test.nentgroup.com/secure/useravatar?ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700"
+      },
+      "displayName": "Reihaneh Vafaei",
+      "emailAddress": "reihaneh.vafaei@nentgroup.com",
+      "key": "reihaneh.vafaei@viasat.se",
+      "name": "reihaneh.vafaei@nentgroup.com",
+      "self": "https://jira-test.nentgroup.com/rest/api/2/user?username=reihaneh.vafaei%40nentgroup.com",
+      "timeZone": "Europe/Stockholm"
+    },
+    "body": "this is comment by @reihaneh.vafaei\n",
+    "created": "2020-08-17T15:04:33.701+0200",
+    "id": "1607065",
+    "self": "https://jira-test.nentgroup.com/rest/api/2/issue/1196615/comment/1607065",
+    "updateAuthor": {
+      "active": true,
+      "avatarUrls": {
+        "16x16": "https://jira-test.nentgroup.com/secure/useravatar?size=xsmall&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "24x24": "https://jira-test.nentgroup.com/secure/useravatar?size=small&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "32x32": "https://jira-test.nentgroup.com/secure/useravatar?size=medium&ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700",
+        "48x48": "https://jira-test.nentgroup.com/secure/useravatar?ownerId=reihaneh.vafaei%40viasat.se&avatarId=24700"
+      },
+      "displayName": "Reihaneh Vafaei",
+      "emailAddress": "reihaneh.vafaei@nentgroup.com",
+      "key": "reihaneh.vafaei@viasat.se",
+      "name": "reihaneh.vafaei@nentgroup.com",
+      "self": "https://jira-test.nentgroup.com/rest/api/2/user?username=reihaneh.vafaei%40nentgroup.com",
+      "timeZone": "Europe/Stockholm"
+    },
+    "updated": "2020-08-17T15:04:33.701+0200"
+  },
+  "timestamp": 1597669473701,
+  "webhookEvent": "comment_created"
+}
