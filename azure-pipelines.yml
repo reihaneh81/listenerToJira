@@ -26,7 +26,6 @@ steps:
   displayName: 'Install dependencies'
 
 - script: 
-      pushd '$(projectRoot)'
       python36 nent-slack-approveApp.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
