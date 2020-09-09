@@ -29,8 +29,9 @@ steps:
   displayName: 'Install dependencies'
 
 - script: 
+      
+      from appSendMessageToslack import AppToSlack
       python nent-slack-approveApp.py
-      python appSendMessageToslack.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
 - task: PythonScript@0
