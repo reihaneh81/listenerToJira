@@ -27,6 +27,6 @@ steps:
 
 - script: 
       pushd '$(projectRoot)'
-      python nent-slack-approveApp.py
+      python36 nent-slack-approveApp.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
