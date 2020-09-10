@@ -36,7 +36,6 @@ class AppToSlack():
                 """This Json File has interactive message
                    By opening and reading data to post Interactive message message
                 """
-
                 with open(r'{0}/ticketInformation.json'.format(dir), 'r') as Interactive_json_file:
                     interactive_message = json.load(Interactive_json_file)
                 print('this is all ticket information for sending interactive message')
