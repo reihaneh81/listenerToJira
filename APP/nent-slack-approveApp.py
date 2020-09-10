@@ -363,7 +363,7 @@ def connectToSlack():
     """
     dir = os.path.dirname(__file__)
     # pprint(dir)
-    with open(r'{0}/approverInfo.json'.format(dir), 'r') as json_file:
+    with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/approverInfo.json', 'r') as json_file:
         filename = json.load(json_file)
     # pprint(filename)
     x = filename['Approver']
