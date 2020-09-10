@@ -3,8 +3,8 @@ from flask import json
 from flask import request, make_response,Response
 import os
 #from appSendMessageToslack import AppToSlack
-import appUpdatesJira_commenting
-import slack
+#import appUpdatesJira_commenting
+#import slack
 import re
 from pprint import pprint
 from atlassian import Jira
