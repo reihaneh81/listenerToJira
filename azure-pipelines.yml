@@ -29,7 +29,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: 
-      python nent-slack-approvalApp.py
+      python APP/nent-slack-approvalApp.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
 - task: PythonScript@0
