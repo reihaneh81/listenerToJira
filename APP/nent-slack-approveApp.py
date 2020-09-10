@@ -213,7 +213,7 @@ def api_jiraTest_message():
                  First It clears previous data
                  """
                  print('This is deleting all data inside ')
-                 with open(r'{0}/ticketInformation.json'.format(dir)) as json_file:
+                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir)) as json_file:
                      opendata = json.load(json_file)
                      opendata.clear()
                      #pprint(opendata)
@@ -222,7 +222,7 @@ def api_jiraTest_message():
                  it prints {} to start writing json
                  """
 
-                 with open(r'{0}/ticketInformation.json'.format(dir), 'w') as json_file:
+                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir), 'w') as json_file:
                      writedata = json.dump(opendata, json_file)
                      print('this is writing only {} inside file ')
                      #pprint(writedata)
@@ -231,7 +231,7 @@ def api_jiraTest_message():
                  It adds information about new ticket is requested
                  """
 
-                 with open(r'{0}/ticketInformation.json'.format(dir), 'r+') as json_file:
+                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir), 'r+') as json_file:
 
                      ticketInformation = json.load(json_file)
 
@@ -300,7 +300,7 @@ def api_jiraTest_message():
 
                  print('Here the approver name.family is storing into json file as approverInfo.json')
                  dir = os.path.dirname(__file__)
-                 with open(r'{0}/approverInfo.json'.format(dir), 'w') as json_file:
+                 with open('/Users/reihvafa/Workspace/github/approverInfo.json'.format(dir), 'w') as json_file:
                      file = json.dump(datainfo, json_file)
                  print('this is printing file')
 
