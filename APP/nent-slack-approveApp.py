@@ -297,7 +297,7 @@ def api_jiraTest_message():
                  datainfo['Priority'].append({
                      'name': '%s' % Priority
                  })
-
+                 "this is changed direction for checking github in pipeline"
                  print('Here the approver name.family is storing into json file as approverInfo.json')
                  dir = os.path.dirname(__file__)
                  with open('/Users/reihvafa/Workspace/github/approverInfo.json'.format(dir), 'w') as json_file:
