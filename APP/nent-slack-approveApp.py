@@ -220,7 +220,7 @@ def api_jiraTest_message():
                  First It clears previous data
                  """
                  print('This is deleting all data inside ')
-                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir)) as json_file:
+                 with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/ticketInformation.json'.format(dir)) as json_file:
                      opendata = json.load(json_file)
                      opendata.clear()
                      #pprint(opendata)
@@ -229,7 +229,7 @@ def api_jiraTest_message():
                  it prints {} to start writing json
                  """
 
-                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir), 'w') as json_file:
+                 with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/ticketInformation.json'.format(dir), 'w') as json_file:
                      writedata = json.dump(opendata, json_file)
                      print('this is writing only {} inside file ')
                      #pprint(writedata)
@@ -238,7 +238,7 @@ def api_jiraTest_message():
                  It adds information about new ticket is requested
                  """
 
-                 with open('/Users/reihvafa/Workspace/github/ticketInformation.json'.format(dir), 'r+') as json_file:
+                 with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/ticketInformation.json'.format(dir), 'r+') as json_file:
 
                      ticketInformation = json.load(json_file)
 
@@ -307,7 +307,7 @@ def api_jiraTest_message():
                  "this is changed direction for checking github in pipeline"
                  print('Here the approver name.family is storing into json file as approverInfo.json')
                  dir = os.path.dirname(__file__)
-                 with open('/Users/reihvafa/Workspace/github/approverInfo.json'.format(dir), 'w') as json_file:
+                 with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/approverInfo.json'.format(dir), 'w') as json_file:
                      file = json.dump(datainfo, json_file)
                  print('this is printing file')
 
@@ -382,7 +382,7 @@ def connectToSlack():
     """This Json File has interactive message
        By opening and reading data to post Interactive message message
     """
-    with open(r'{0}/ticketInformation.json'.format(dir), 'r') as Interactive_json_file:
+    with open('/Users/reihvafa/Workspace/github_test_pipeline/listenerToJira/ticketInformation.json'.format(dir), 'r') as Interactive_json_file:
         interactive_message = json.load(Interactive_json_file)
     print('this is all ticket information for sending interactive message')
     # pprint(interactive_message)
