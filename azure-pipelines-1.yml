@@ -28,8 +28,8 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-- script: 
-      python nent-slack-approvalApp.py
+- script:
+      python APP/nent-slack-approvalApp.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
 - task: PythonScript@0
