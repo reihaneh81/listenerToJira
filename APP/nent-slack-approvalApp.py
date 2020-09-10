@@ -27,10 +27,15 @@ app1 = Flask(__name__)
 
 
 # Our app's Slack Event Adapter for receiving actions via the Events API
-slack_signing_secret = os.environ["SLACK_SIGNING_SECRET"]
-SLACK_VERIFICATION_TOKEN = os.environ["SLACK_VERIFICATION_TOKEN"]
+#slack_signing_secret = os.environ["SLACK_SIGNING_SECRET"]
+slack_signing_secret="3c2d1de5482fb85642d214cf5693b0c1"
+
+#SLACK_VERIFICATION_TOKEN = os.environ["SLACK_VERIFICATION_TOKEN"]
+SLACK_VERIFICATION_TOKEN="sCwtOSXiaWrU4eoSYVgRS9Hg"
 # Create a SlackClient for your bot to use for Web API requests
-slack_bot_token = os.environ["App_Token"]
+#slack_bot_token = os.environ["App_Token"]
+
+slack_bot_token='xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t'
 slack_client = slack.WebClient(slack_bot_token)
 
 #AppToSlack = AppToSlack()
