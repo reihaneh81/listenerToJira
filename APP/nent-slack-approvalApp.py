@@ -644,6 +644,6 @@ def slackResponse():
 if __name__ == "__main__":
 
     print('Run app to parse data from Jira')
-    app1.run(port=8080)
+    app1.run()
 
 
