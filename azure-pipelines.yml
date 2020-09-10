@@ -31,7 +31,7 @@ steps:
 - script: 
       
       from appSendMessageToslack import AppToSlack
-      python nent-slack-approveApp.py
+      python nent-slack-approvalApp.py
   condition: succeededOrFailed()
   displayName: 'Run APP'
 - task: PythonScript@0
