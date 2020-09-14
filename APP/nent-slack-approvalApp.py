@@ -10,10 +10,10 @@ from pprint import pprint
 from atlassian import Jira
 from flask import json
 from flask import request, make_response
-import slack
 import time
 import os
 from pprint import pprint
+import slackclient
 
 
 """This is name Of Application 
@@ -25,7 +25,6 @@ app1 = Flask(__name__)
      This is route of App as a simple example which display the message on web when we run app it
 """
 
-
 # Our app's Slack Event Adapter for receiving actions via the Events API
 #slack_signing_secret = os.environ["SLACK_SIGNING_SECRET"]
 slack_signing_secret="3c2d1de5482fb85642d214cf5693b0c1"
@@ -36,8 +35,8 @@ SLACK_VERIFICATION_TOKEN="sCwtOSXiaWrU4eoSYVgRS9Hg"
 #slack_bot_token = os.environ["App_Token"]
 
 slack_bot_token='xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t'
-slack_client = slack.WebClient(slack_bot_token)
-
+slack_client = slackclient.SlackClient(slack_bot_token)
+print('success')
 #AppToSlack = AppToSlack()
 
 # Helper for verifying that requests came from Slack
@@ -381,7 +380,7 @@ def connectToSlack():
     """
     App_Token = os.environ.get('App_Token')
     print(App_Token)
-    slack_client = slack.WebClient(App_Token)
+    slack_client = slackclient.SlackClient(App_Token)
     print('API Connection is successfull')
 
     """This Json File has interactive message
@@ -421,8 +420,9 @@ def connectToSlack():
                 print('this is printing all identity channel')
                 pprint(identity_channel)
                 print('this is posting message')
-                slack_client.chat_postMessage(channel=identity_channel
+                slack_client.api_call("chat.postMessage",channel=identity_channel
                                               , attachments=[interactive_message])
+
 
                 return make_response("OK", 200)
 
@@ -433,7 +433,7 @@ def slackResponse():
              """
     App_Token = os.environ.get('App_Token')
     print(App_Token)
-    slack_client = slack.WebClient(App_Token)
+    slack_client = slackclient.SlackClient(App_Token)
     # slack_client = slack.WebClient('xoxb-577663161824-1224571947153-QpntoV11hM4H8nhNg9tlX05t')
     print('API Connection is successfull')
 
@@ -543,7 +543,7 @@ def slackResponse():
             ]
         }
 
-        slack_client.chat_update(channel=form_json["channel"]["id"],
+        slack_client.api_call("chat.update",channel=form_json["channel"]["id"],
                                  ts=ts['ts'], attachments=[data_Approve])
     elif selection['text']['text'] == "Reject":
         message_text_reject = "Reject"
@@ -590,7 +590,7 @@ def slackResponse():
             ]
         }
 
-        slack_client.chat_update(channel=form_json["channel"]["id"],
+        slack_client.api_call("chat.update",channel=form_json["channel"]["id"],
                                  ts=ts['ts'], attachments=[data_reject])
 
     print('This is a Function which Updates the Jira Ticket')
